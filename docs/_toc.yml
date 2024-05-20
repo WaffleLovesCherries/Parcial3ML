@@ -2,3 +2,5 @@ format: jb-book
 root: intro
 chapters:
 - file: Punto1
+- file: Punto2
+- file: Punto3

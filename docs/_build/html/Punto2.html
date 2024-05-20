@@ -1,0 +1,2605 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Parte 1: Limpieza de los datos &#8212; Parcial 3 Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Punto2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parte 1: Limpieza de los datos" href="Punto3.html" />
+    <link rel="prev" title="Punto 1" href="Punto1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Parcial 3 Machine Learning - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Parcial 3 Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Tercer Parcial Machine learning 2024
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Punto1.html">Punto 1</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Parte 1: Limpieza de los datos</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Punto3.html">Parte 1: Limpieza de los datos</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Punto2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Parte 1: Limpieza de los datos</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Parte 1: Limpieza de los datos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procentaje-de-datos-faltantes">Procentaje de datos faltantes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-2-analisis-exploratorio-de-los-datos">Parte 2: Análisis exploratorio de los datos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-dependiente">Variable dependiente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#productcd"><code class="docutils literal notranslate"><span class="pre">ProductCD</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-continuas">Variables contínuas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transactionamt"><code class="docutils literal notranslate"><span class="pre">TransactionAmt</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c1"><code class="docutils literal notranslate"><span class="pre">C1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c3"><code class="docutils literal notranslate"><span class="pre">C3</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c5"><code class="docutils literal notranslate"><span class="pre">C5</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d1"><code class="docutils literal notranslate"><span class="pre">D1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d10"><code class="docutils literal notranslate"><span class="pre">D10</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d15"><code class="docutils literal notranslate"><span class="pre">D15</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#v100"><code class="docutils literal notranslate"><span class="pre">V100</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#v131"><code class="docutils literal notranslate"><span class="pre">V131</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-grafico-con-componentes-principales">Análisis gráfico con componentes principales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-3-modelos-de-clasificacion">Parte 3: Modelos de clasificación</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-kernel-lineal">SVM: Kernel Lineal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-sigmoide">Kernel Sigmoide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-rbf">Kernel RBF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-modelos">Comparación de modelos</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>Importación de librerias y scripts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pickle</span> <span class="kn">import</span> <span class="n">load</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">concat</span>
+<span class="kn">from</span> <span class="nn">cleaning</span> <span class="kn">import</span> <span class="n">chisq_matrix</span><span class="p">,</span> <span class="n">delete_underwhelming</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;../../picklesClass/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;ClassBase.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">Numerical</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">Categorical</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">Numerical</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span>
+<span class="n">Categorical</span> <span class="o">=</span> <span class="n">delete_underwhelming</span><span class="p">(</span> <span class="n">Categorical</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="parte-1-limpieza-de-los-datos">
+<h1>Parte 1: Limpieza de los datos<a class="headerlink" href="#parte-1-limpieza-de-los-datos" title="Link to this heading">#</a></h1>
+<p>En primer lugar cabe aclarar que los datos faltantes para cada variable se rellenaron con sus respectivas modas o medias según la naturaleza de la variable. En el caso de las categóricas, se omitieron aquellas variables cuyo porcentaje de datos faltantes superaba el 20%, ya que reemplazar estos datos faltantes por la moda podría llegar</p>
+<p>Para las variables continuas se usó el script provisto en el archivo <code class="docutils literal notranslate"><span class="pre">cleaning.py</span></code>, que consiste en dos fases de eliminación en base al mayor VIF en caso que este sea superior a 10 o 5. La primera fase ubica las dos variables independientes más correlacionadas entre sí y elimina aquella con mayor VIF en caso que supere el valor de 10. Este proceso para en el momento que la mayor correlación sea inferior a 0.5, despues de esto, se ejecuta la eliminación simple por VIF en el mayor de todos hasta que el mayor de los VIF sea inferior a 105. En últimas, esto garantiza una multicolinealidad extremadamente baja.</p>
+<p>Por otro lado, la eliminación en las variables categóricas se realizó mediante una prueba de contingencia de <span class="math notranslate nohighlight">\(\chi^2\)</span>, específicamente, se usó una matriz para visualizar el p-valor arrojado por la prueba entre las variables. Se pueden ver los resultados mencionados en la siguiente tabla:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chisq_matrix</span><span class="p">(</span> <span class="n">concat</span><span class="p">(</span> <span class="p">[</span> <span class="n">DataFrame</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span> <span class="p">),</span> <span class="n">Categorical</span> <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isFraud</th>
+      <th>ProductCD</th>
+      <th>card4</th>
+      <th>card6</th>
+      <th>P_emaildomain</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>isFraud</th>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>7.129275e-79</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>ProductCD</th>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>card4</th>
+      <td>7.129275e-79</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>card6</th>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>P_emaildomain</th>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Es evidente que todas estas variables están fuertemente correlacionadas tanto entre sí mismas, como con la variable respuesta, por lo que es sufiente tomar una de estas para los modelos. En este caso se tomará la variable <code class="docutils literal notranslate"><span class="pre">ProductCD</span></code>, ya que no presentó datos faltantes (Esto se probará más adelante).</p>
+<section id="procentaje-de-datos-faltantes">
+<h2>Procentaje de datos faltantes<a class="headerlink" href="#procentaje-de-datos-faltantes" title="Link to this heading">#</a></h2>
+<p>A continuación se pueden ver el porcentaje de los datos faltantes para las variables seleccionadas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">read_csv</span><span class="p">,</span> <span class="n">DataFrame</span>
+<span class="n">DataMissing</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">read_csv</span><span class="p">(</span><span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;train_transaction.csv&#39;</span><span class="p">),</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;train_identity.csv&#39;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;TransactionID&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)[[</span> 
+    <span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;D1&#39;</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">,</span> <span class="s1">&#39;D10&#39;</span><span class="p">,</span> <span class="s1">&#39;D11&#39;</span><span class="p">,</span> <span class="s1">&#39;D12&#39;</span><span class="p">,</span> <span class="s1">&#39;D13&#39;</span><span class="p">,</span> <span class="s1">&#39;D14&#39;</span><span class="p">,</span> <span class="s1">&#39;D15&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;ProductCD&#39;</span><span class="p">,</span> <span class="s2">&quot;V142&quot;</span><span class="p">,</span> <span class="s2">&quot;V141&quot;</span><span class="p">,</span> <span class="s2">&quot;V138&quot;</span><span class="p">,</span> <span class="s2">&quot;V135&quot;</span><span class="p">,</span> <span class="s2">&quot;V131&quot;</span><span class="p">,</span> <span class="s2">&quot;V130&quot;</span><span class="p">,</span> <span class="s2">&quot;V12&quot;</span><span class="p">,</span> <span class="s2">&quot;V104&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V101&quot;</span><span class="p">,</span> <span class="s2">&quot;V100&quot;</span><span class="p">,</span> <span class="s2">&quot;V10&quot;</span><span class="p">,</span> <span class="s2">&quot;TransactionAmt&quot;</span><span class="p">,</span> <span class="s2">&quot;D9&quot;</span><span class="p">,</span> <span class="s2">&quot;D8&quot;</span><span class="p">,</span> <span class="s2">&quot;D7&quot;</span><span class="p">,</span> <span class="s2">&quot;D5&quot;</span><span class="p">,</span> <span class="s2">&quot;D4&quot;</span> <span class="p">]]</span>
+
+<span class="n">Miss</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">((</span><span class="n">DataMissing</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">DataMissing</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;%&#39;</span><span class="p">])</span>
+<span class="n">Miss</span><span class="p">[</span> <span class="n">Miss</span><span class="p">[</span><span class="s1">&#39;%&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">20</span> <span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s1">&#39;Porcentaje de datos faltantes mayor o igual al 20%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_13154">
+  <caption>Porcentaje de datos faltantes mayor o igual al 20%</caption>
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_13154_level0_col0" class="col_heading level0 col0" >D3</th>
+      <th id="T_13154_level0_col1" class="col_heading level0 col1" >D11</th>
+      <th id="T_13154_level0_col2" class="col_heading level0 col2" >D12</th>
+      <th id="T_13154_level0_col3" class="col_heading level0 col3" >D13</th>
+      <th id="T_13154_level0_col4" class="col_heading level0 col4" >D14</th>
+      <th id="T_13154_level0_col5" class="col_heading level0 col5" >V142</th>
+      <th id="T_13154_level0_col6" class="col_heading level0 col6" >V141</th>
+      <th id="T_13154_level0_col7" class="col_heading level0 col7" >V138</th>
+      <th id="T_13154_level0_col8" class="col_heading level0 col8" >V10</th>
+      <th id="T_13154_level0_col9" class="col_heading level0 col9" >D9</th>
+      <th id="T_13154_level0_col10" class="col_heading level0 col10" >D8</th>
+      <th id="T_13154_level0_col11" class="col_heading level0 col11" >D7</th>
+      <th id="T_13154_level0_col12" class="col_heading level0 col12" >D5</th>
+      <th id="T_13154_level0_col13" class="col_heading level0 col13" >D4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_13154_level0_row0" class="row_heading level0 row0" >%</th>
+      <td id="T_13154_row0_col0" class="data row0 col0" >44.514851</td>
+      <td id="T_13154_row0_col1" class="data row0 col1" >47.293494</td>
+      <td id="T_13154_row0_col2" class="data row0 col2" >89.041047</td>
+      <td id="T_13154_row0_col3" class="data row0 col3" >89.509263</td>
+      <td id="T_13154_row0_col4" class="data row0 col4" >89.469469</td>
+      <td id="T_13154_row0_col5" class="data row0 col5" >86.123717</td>
+      <td id="T_13154_row0_col6" class="data row0 col6" >86.123717</td>
+      <td id="T_13154_row0_col7" class="data row0 col7" >86.123717</td>
+      <td id="T_13154_row0_col8" class="data row0 col8" >47.293494</td>
+      <td id="T_13154_row0_col9" class="data row0 col9" >87.312290</td>
+      <td id="T_13154_row0_col10" class="data row0 col10" >87.312290</td>
+      <td id="T_13154_row0_col11" class="data row0 col11" >93.409930</td>
+      <td id="T_13154_row0_col12" class="data row0 col12" >52.467403</td>
+      <td id="T_13154_row0_col13" class="data row0 col13" >28.604667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Como se puede ver en la tabla, gran parte de las variables elegidas al final, tienen un porcentaje de datos faltantes mayor al 20%. Para mantener el sentido del modelo, es mejor eliminar estas variables, ya que gran parte se reemplazará por la media, lo que puede llegar a generar datos irrelevantes para los modelos. Finalmente, los datos independientes quedan de la siguiente manera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s2">&quot;ClassData.pkl&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ProductCD_C</th>
+      <th>ProductCD_H</th>
+      <th>ProductCD_R</th>
+      <th>ProductCD_S</th>
+      <th>ProductCD_W</th>
+      <th>C1</th>
+      <th>C3</th>
+      <th>C5</th>
+      <th>D1</th>
+      <th>D10</th>
+      <th>D15</th>
+      <th>V135</th>
+      <th>V131</th>
+      <th>V130</th>
+      <th>V12</th>
+      <th>V104</th>
+      <th>V101</th>
+      <th>V100</th>
+      <th>TransactionAmt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>14.0</td>
+      <td>13.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>68.50</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>29.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>315.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>59.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>112.0</td>
+      <td>84.000000</td>
+      <td>111.000000</td>
+      <td>0.000000</td>
+      <td>135.0</td>
+      <td>354.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>123.982137</td>
+      <td>163.744579</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.559711</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>590535</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>29.0</td>
+      <td>56.000000</td>
+      <td>56.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>47.950001</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>49.00</td>
+    </tr>
+    <tr>
+      <th>590536</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>39.50</td>
+    </tr>
+    <tr>
+      <th>590537</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>30.95</td>
+    </tr>
+    <tr>
+      <th>590538</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>22.0</td>
+      <td>22.000000</td>
+      <td>22.000000</td>
+      <td>0.000000</td>
+      <td>117.0</td>
+      <td>117.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>117.00</td>
+    </tr>
+    <tr>
+      <th>590539</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>279.950012</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>2.000000</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>279.95</td>
+    </tr>
+  </tbody>
+</table>
+<p>590540 rows × 19 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="parte-2-analisis-exploratorio-de-los-datos">
+<h1>Parte 2: Análisis exploratorio de los datos<a class="headerlink" href="#parte-2-analisis-exploratorio-de-los-datos" title="Link to this heading">#</a></h1>
+<section id="variable-dependiente">
+<h2>Variable dependiente<a class="headerlink" href="#variable-dependiente" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="n">y_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">])</span>
+
+<span class="n">value_counts</span> <span class="o">=</span> <span class="n">y_df</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="n">value_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value_counts_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gráfico de barras de fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4959d56c9a11a5b2bcadd8c25fa28bc7f933ddf93e86a5d20bfa94e8e1a40b18.png" src="_images/4959d56c9a11a5b2bcadd8c25fa28bc7f933ddf93e86a5d20bfa94e8e1a40b18.png" />
+</div>
+</div>
+<p>Como se puede ver en la gráfica, la variable <code class="docutils literal notranslate"><span class="pre">isFraud</span></code> cuenta con un total de 569877 (97%) de transacciones lícitas, por lo que puede ser problemático para la generación de modelos sin una forma de balancear la desproporción.</p>
+</section>
+<section id="productcd">
+<h2><code class="docutils literal notranslate"><span class="pre">ProductCD</span></code><a class="headerlink" href="#productcd" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value_counts</span> <span class="o">=</span> <span class="n">Categorical</span><span class="p">[</span><span class="s1">&#39;ProductCD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="n">value_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value_counts_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gráfico de barras de código de producto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5055c6526346e11c76e87fe8da76dcb13d2cb0d5ccd8f58824b63eb347fc58c8.png" src="_images/5055c6526346e11c76e87fe8da76dcb13d2cb0d5ccd8f58824b63eb347fc58c8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">crosstab</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">append</span>
+
+<span class="n">eda_df</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span> <span class="p">[</span> <span class="n">y_df</span><span class="p">,</span> <span class="n">Categorical</span> <span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">)</span>
+
+<span class="n">cross_table</span> <span class="o">=</span> <span class="n">crosstab</span><span class="p">(</span> <span class="n">eda_df</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">],</span> <span class="n">eda_df</span><span class="p">[</span><span class="s1">&#39;ProductCD&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="n">ct</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">cross_dict</span> <span class="o">=</span> <span class="n">cross_table</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cross_dict</span><span class="p">:</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">array</span><span class="p">([])</span>
+    <span class="k">for</span> <span class="n">sub_key</span> <span class="ow">in</span> <span class="n">cross_dict</span><span class="p">[</span> <span class="n">key</span> <span class="p">]:</span> <span class="n">item</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span> <span class="n">item</span><span class="p">,</span> <span class="n">cross_dict</span><span class="p">[</span> <span class="n">key</span> <span class="p">][</span> <span class="n">sub_key</span> <span class="p">]</span> <span class="p">)</span>
+    <span class="n">ct</span><span class="p">[</span> <span class="n">key</span> <span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+
+<span class="n">isFraud</span> <span class="o">=</span> <span class="p">(</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span> <span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">bottom</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">boolean</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">isFraud</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">boolean</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="n">bottom</span> <span class="p">)</span>
+    <span class="n">bottom</span> <span class="o">+=</span> <span class="n">count</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Código de producto según fraude detectado&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/12628c60e3d7a7375f1b1689cf9f869ed1dd848993499e10d73a9e739baaf8da.png" src="_images/12628c60e3d7a7375f1b1689cf9f869ed1dd848993499e10d73a9e739baaf8da.png" />
+</div>
+</div>
+</section>
+<section id="variables-continuas">
+<h2>Variables contínuas<a class="headerlink" href="#variables-continuas" title="Link to this heading">#</a></h2>
+<p>Se puede observar el resumen de las variables en la siguiente tabla</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;ProductCD_C&#39;</span><span class="p">,</span> <span class="s1">&#39;ProductCD_H&#39;</span><span class="p">,</span> <span class="s1">&#39;ProductCD_R&#39;</span><span class="p">,</span> <span class="s1">&#39;ProductCD_S&#39;</span><span class="p">,</span> <span class="s1">&#39;ProductCD_W&#39;</span> <span class="p">]</span> <span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>C1</th>
+      <th>C3</th>
+      <th>C5</th>
+      <th>D1</th>
+      <th>D10</th>
+      <th>D15</th>
+      <th>V135</th>
+      <th>V131</th>
+      <th>V130</th>
+      <th>V12</th>
+      <th>V104</th>
+      <th>V101</th>
+      <th>V100</th>
+      <th>TransactionAmt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+      <td>590540.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>14.092458</td>
+      <td>0.005644</td>
+      <td>5.571526</td>
+      <td>94.347568</td>
+      <td>123.982137</td>
+      <td>163.744579</td>
+      <td>17.250132</td>
+      <td>31.133302</td>
+      <td>92.165849</td>
+      <td>0.559711</td>
+      <td>0.085433</td>
+      <td>0.889249</td>
+      <td>0.273504</td>
+      <td>135.027176</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>133.569018</td>
+      <td>0.150536</td>
+      <td>25.786976</td>
+      <td>157.490898</td>
+      <td>170.456102</td>
+      <td>186.805646</td>
+      <td>293.769431</td>
+      <td>161.118406</td>
+      <td>315.876473</td>
+      <td>0.476516</td>
+      <td>0.648545</td>
+      <td>20.577098</td>
+      <td>0.946924</td>
+      <td>239.162522</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>-83.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.251000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>43.321000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>3.000000</td>
+      <td>43.000000</td>
+      <td>117.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.559711</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>68.769000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>3.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>121.000000</td>
+      <td>150.000000</td>
+      <td>251.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>59.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>125.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>4685.000000</td>
+      <td>26.000000</td>
+      <td>349.000000</td>
+      <td>640.000000</td>
+      <td>876.000000</td>
+      <td>879.000000</td>
+      <td>90750.000000</td>
+      <td>55125.000000</td>
+      <td>55125.000000</td>
+      <td>3.000000</td>
+      <td>15.000000</td>
+      <td>869.000000</td>
+      <td>28.000000</td>
+      <td>31937.391000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Es evidente que para la mayoria de variables, la desviación estándar es mucho más alta que la media, por lo que los datos van a estar extremadamente dispersos. Más aún, Todos los máximos son extremadamente altos, mucho más que el tercer cuartil, por tanto se evidencian datos extremadamente atípicos. También es notable la diferencia entre la media y la mediana, lo que implica que todas las variables tienen una severa asimetría.</p>
+<section id="transactionamt">
+<h3><code class="docutils literal notranslate"><span class="pre">TransactionAmt</span></code><a class="headerlink" href="#transactionamt" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transaction_amt_values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;TransactionAmt&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">transaction_amt_values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma del monto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Monto de la transacción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2e716710800a82a74caebbcd899319e8d471176be82b27554213c54dbae9ca74.png" src="_images/2e716710800a82a74caebbcd899319e8d471176be82b27554213c54dbae9ca74.png" />
+</div>
+</div>
+<p>Es notable que casi el total de los datos se encuentra en el primer intérvalo inferior a 5000, además el tamaño del intérvalo implica la existencia de uno o más datos atípicos extremadamente altos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eda_df</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span> <span class="p">[</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">X</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eda_df</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">eda_df</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;TransactionAmt&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Cantidad del monto según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Monto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/157bf22483db84627a63eef9309070d0964c09e5d41af019d0b4a2b09aa63f41.png" src="_images/157bf22483db84627a63eef9309070d0964c09e5d41af019d0b4a2b09aa63f41.png" />
+</div>
+</div>
+<p>Como se mencionó previamente, se encuentra un dato extremádamente atípico. Podemos ver que hay una tendencia para las transacciones lícitas en alcanzar valores más altos, aún así, no se pueden sacar muchas conclusiones dada la desproporción de los datos.</p>
+</section>
+<section id="c1">
+<h3><code class="docutils literal notranslate"><span class="pre">C1</span></code><a class="headerlink" href="#c1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de C1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6f6ba9785ed5682e1d6195482b6647fee3d14da0e512bf574a978d4796462050.png" src="_images/6f6ba9785ed5682e1d6195482b6647fee3d14da0e512bf574a978d4796462050.png" />
+</div>
+</div>
+<p>Así como en la variable anterior, se encuentra una asimetría extrema. Esto se debe especialmente al hecho que el 75% de los datos es menor o igual a 3, mientras que hay un rango extremadamente amplio.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;C1 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f5915c6558cc5b1fd45fef2a1322f844e8be6889bb53308be46cd5cc34c09d97.png" src="_images/f5915c6558cc5b1fd45fef2a1322f844e8be6889bb53308be46cd5cc34c09d97.png" />
+</div>
+</div>
+<p>En este caso tambien es evidente que hay mayor concentración de datos atípicos en el conjunto lícito dada la disparidad, pero se puede ver claramente que ambas mantienen cierta similitud. Como se pudo ver en la tabla descriptiva, la gran mayoria de las variables se concentran en el intérvalo de 0-3.</p>
+</section>
+<section id="c3">
+<h3><code class="docutils literal notranslate"><span class="pre">C3</span></code><a class="headerlink" href="#c3" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;C3&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de C3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;C3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5e9485e0081435b827885b6c36a6b084600b8021237717ef5c0530c6a6bca925.png" src="_images/5e9485e0081435b827885b6c36a6b084600b8021237717ef5c0530c6a6bca925.png" />
+</div>
+</div>
+<p>Es notorio que no se puede apreciar ningún valor por fuera del intérvalo marcado, por lo que como el resto de variables, es evidencia de muchos datos atípicos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;C3 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;C3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1bef2155b97ea845cf7ba72c8fab2e015c25ec159996f8bc7c6f15a6b7bc9410.png" src="_images/1bef2155b97ea845cf7ba72c8fab2e015c25ec159996f8bc7c6f15a6b7bc9410.png" />
+</div>
+</div>
+<p>Como se menciona antes, la mayoria de datos se concentra en el valor de 0, aún así, se presentan unos cuantos datos atípicos en la parte lícita de las transacciones.</p>
+</section>
+<section id="c5">
+<h3><code class="docutils literal notranslate"><span class="pre">C5</span></code><a class="headerlink" href="#c5" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;C5&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de C5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/59d35aeb3c7c441f001f7a03e3b05c989bec610561c62e99acb9d6c109a72e0f.png" src="_images/59d35aeb3c7c441f001f7a03e3b05c989bec610561c62e99acb9d6c109a72e0f.png" />
+</div>
+</div>
+<p>A diferencia de las variables anteriores, esta sí permite observar unos cuantos valores por fuera de los valores iniciales, aún así, mantiene el patrón previo de una concentración de datos extrema al inicio del intérvalo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;C5 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9b46946fe4d72628c88bc371cde675c51aa837ab55f7d3d8087168b320026173.png" src="_images/9b46946fe4d72628c88bc371cde675c51aa837ab55f7d3d8087168b320026173.png" />
+</div>
+</div>
+<p>Por otro lado, podemos observar una ligera diferencia más marcada entre los casos de fraude, ya que las transacciones lícitas tienen en general datos atípicos mayores que los de las transacciones marcadas como fraude.</p>
+</section>
+<section id="d1">
+<h3><code class="docutils literal notranslate"><span class="pre">D1</span></code><a class="headerlink" href="#d1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;D1&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de D1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;D1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/80f058ce4aaa06ee792ae2a3a99ad129c5256a487c100ab7263fda0f5c6c8e29.png" src="_images/80f058ce4aaa06ee792ae2a3a99ad129c5256a487c100ab7263fda0f5c6c8e29.png" />
+</div>
+</div>
+<p>De forma similar a la variable anterior, a pesar de tener datos atípicos, es evidente que la variable posee una distribución más cercana al origen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;D1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;D1 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;D1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bb3a6700e42b6653e4759f5bd700f54345b1f819059e372c861a54332edd6661.png" src="_images/bb3a6700e42b6653e4759f5bd700f54345b1f819059e372c861a54332edd6661.png" />
+</div>
+</div>
+<p>Es evidente que las transacciones lícitas tienen tendencia a poseer un valor mayor de la variable D1.</p>
+</section>
+<section id="d10">
+<h3><code class="docutils literal notranslate"><span class="pre">D10</span></code><a class="headerlink" href="#d10" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;D10&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;D10&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;D10&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d72c092e8fa02ab09761f3a34ef5855e6474c3faf9a986fb409ed49e3e3a22c3.png" src="_images/d72c092e8fa02ab09761f3a34ef5855e6474c3faf9a986fb409ed49e3e3a22c3.png" />
+</div>
+</div>
+<p>Esta variable presenta una distribución aún menos dispersa que la anterior, por lo que se puede esperar una mejor representación de la variable respuesta.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;D10&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;D10 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;D10&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/eb88333e57e984c22882e8c287903e1d5f25bb9b21805b186e7f50a473e2ddcf.png" src="_images/eb88333e57e984c22882e8c287903e1d5f25bb9b21805b186e7f50a473e2ddcf.png" />
+</div>
+</div>
+<p>Es evidente que la mediana de las transacciones lícitas es mayor a aquella de las ilícitas, mientras que los datos atípicos se extienden a un mayor rango.</p>
+</section>
+<section id="d15">
+<h3><code class="docutils literal notranslate"><span class="pre">D15</span></code><a class="headerlink" href="#d15" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;D15&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de D15&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;D15&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d218c4f0aaa0f7b4d6598d63353bf8c343d7c7083ad0f6c128472a365530e739.png" src="_images/d218c4f0aaa0f7b4d6598d63353bf8c343d7c7083ad0f6c128472a365530e739.png" />
+</div>
+</div>
+<p>Esta variable comparte comportamiento con la variable anterior, presentando aún menos dispersión de los datos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;D15&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;D15 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;D15&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/526ae2d20c5bffe6f2e4e1153c99c1b5995542a2dbdc44d95f0e46e9c9af44b0.png" src="_images/526ae2d20c5bffe6f2e4e1153c99c1b5995542a2dbdc44d95f0e46e9c9af44b0.png" />
+</div>
+</div>
+<p>De la misma forma, hay una diferencia marcada en la mediana para ambas categorías.</p>
+</section>
+<section id="v100">
+<h3><code class="docutils literal notranslate"><span class="pre">V100</span></code><a class="headerlink" href="#v100" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;V100&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de V100&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;V100&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/62d8b5783b02cf7e63192a776e5b6579d306f54b88afa3493d1496b2d79bf8c5.png" src="_images/62d8b5783b02cf7e63192a776e5b6579d306f54b88afa3493d1496b2d79bf8c5.png" />
+</div>
+</div>
+<p>Por otro lado, esta variable presenta un comportamiento similar a las primeras variables, donde se espera una gran cantidad de datos atípicos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;V100&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;V100 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;V100&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/56d53c9640843c3dbd60013dc0f6ad6d31bb258160f45e1574bac084c944af2d.png" src="_images/56d53c9640843c3dbd60013dc0f6ad6d31bb258160f45e1574bac084c944af2d.png" />
+</div>
+</div>
+<p>Aún así, esta variable presenta una ligera diferencia para la variable categórica, dado que los datos atípicos ( o mayores a 0 ), se extienden más para las transacciones lícitas</p>
+</section>
+<section id="v131">
+<h3><code class="docutils literal notranslate"><span class="pre">V131</span></code><a class="headerlink" href="#v131" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;V131&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de V131&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;V131&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ace68e5a0e02095b16e69fd6c5faa36a04eab90613abed98ebf312bf09383356.png" src="_images/ace68e5a0e02095b16e69fd6c5faa36a04eab90613abed98ebf312bf09383356.png" />
+</div>
+</div>
+<p>Esta variable presenta el mismo comportamiento a la primera variable, donde no son evidentes valores por fuera de un intervalo, lo que implica que hay valores atípicos extremadamente grandes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;V131&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;isFraud&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">eda_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;V131 según fraude detectado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;V131&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/241e5b4d303e6470db35ab81a562d7fa74d0a604b62af73e3cacfec2b989589d.png" src="_images/241e5b4d303e6470db35ab81a562d7fa74d0a604b62af73e3cacfec2b989589d.png" />
+</div>
+</div>
+<p>Como se menciona antes, la mayoría de datos se concentran en el valor 0, teniendo unos cuantos datos atípicos más grandes en las transacciones lícitas.</p>
+</section>
+<section id="analisis-grafico-con-componentes-principales">
+<h3>Análisis gráfico con componentes principales<a class="headerlink" href="#analisis-grafico-con-componentes-principales" title="Link to this heading">#</a></h3>
+<p>El siguiente gráfico compara las diferencias entre las transacciones fraudulentas y las lícitas mediante las dos primeras componentes principales. Recordemos que estas dos son las que representan un mayor porcentaje de variabilidad con respecto al conjunto de datos original.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ProductCD_C</th>
+      <th>ProductCD_H</th>
+      <th>ProductCD_R</th>
+      <th>ProductCD_S</th>
+      <th>ProductCD_W</th>
+      <th>C1</th>
+      <th>C3</th>
+      <th>C5</th>
+      <th>D1</th>
+      <th>D10</th>
+      <th>D15</th>
+      <th>V135</th>
+      <th>V131</th>
+      <th>V130</th>
+      <th>V12</th>
+      <th>V104</th>
+      <th>V101</th>
+      <th>V100</th>
+      <th>TransactionAmt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>14.0</td>
+      <td>13.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>68.50</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>29.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>315.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>59.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>112.0</td>
+      <td>84.000000</td>
+      <td>111.000000</td>
+      <td>0.000000</td>
+      <td>135.0</td>
+      <td>354.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>123.982137</td>
+      <td>163.744579</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.559711</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>590535</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>29.0</td>
+      <td>56.000000</td>
+      <td>56.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>47.950001</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>49.00</td>
+    </tr>
+    <tr>
+      <th>590536</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>39.50</td>
+    </tr>
+    <tr>
+      <th>590537</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>30.95</td>
+    </tr>
+    <tr>
+      <th>590538</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>22.0</td>
+      <td>22.000000</td>
+      <td>22.000000</td>
+      <td>0.000000</td>
+      <td>117.0</td>
+      <td>117.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>117.00</td>
+    </tr>
+    <tr>
+      <th>590539</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>279.950012</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>2.000000</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>279.95</td>
+    </tr>
+  </tbody>
+</table>
+<p>590540 rows × 19 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s2">&quot;ClassPCA.pkl&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">X_pca</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">y_pca</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_pca</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Componente 0&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Componente 1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/059ba56a8d9e0c25796fa750e53c27b60b05f8d93aa0d60d3da2509d56db53d1.png" src="_images/059ba56a8d9e0c25796fa750e53c27b60b05f8d93aa0d60d3da2509d56db53d1.png" />
+</div>
+</div>
+<p>Como se puede ver en la gráfica, ambas clases se encuentran muy cercanas entre sí, por lo que es evidente que se requiere un aumento de dimensionalidad para encontrar una partición clara entre las clases.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="parte-3-modelos-de-clasificacion">
+<h1>Parte 3: Modelos de clasificación<a class="headerlink" href="#parte-3-modelos-de-clasificacion" title="Link to this heading">#</a></h1>
+<p>En primer lugar, para evitar fuga de información, se separará un conjunto de prueba, dado el uso de ADASYN</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">37</span> <span class="p">)</span>
+
+<span class="n">y_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">])</span>
+
+<span class="n">value_counts</span> <span class="o">=</span> <span class="n">y_df</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="n">value_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value_counts_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gráfico de barras de fraude muestreado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bf2511f373e166c0d1de5b4610ed0446d671dc0b74ee0cf46ed7edb376ac0607.png" src="_images/bf2511f373e166c0d1de5b4610ed0446d671dc0b74ee0cf46ed7edb376ac0607.png" />
+</div>
+</div>
+<p>Como se puede ver, el conjunto de testeo mantiene la proporción antes mencionada de 97-3. Ahora bien, se realizarán los modelos con y sin rebalanceamiento ADASYN. Podemos visualizar la nueva variable dependiente balanceada con la siguiente gráfica:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">ADASYN</span>
+
+<span class="n">adasyn</span> <span class="o">=</span> <span class="n">ADASYN</span><span class="p">(</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">37</span> <span class="p">)</span>
+
+<span class="n">X_bal</span><span class="p">,</span> <span class="n">y_bal</span> <span class="o">=</span> <span class="n">adasyn</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_bal</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">])</span>
+
+<span class="n">value_counts</span> <span class="o">=</span> <span class="n">y_df</span><span class="p">[</span><span class="s1">&#39;isFraud&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="n">value_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">value_counts</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value_counts_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gráfico de barras de fraude rebalanceado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fraude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4b0a7d3a5e0142c4e2f5e102fbda832bc0701e58366d39f916927e4083256cfd.png" src="_images/4b0a7d3a5e0142c4e2f5e102fbda832bc0701e58366d39f916927e4083256cfd.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">newaxis</span><span class="p">,</span> <span class="n">argsort</span>
+
+<span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Predictions contain values other than 0 and 1&quot;</span><span class="p">)</span>
+    
+    <span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span>
+        <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">recall</span><span class="p">,</span>
+        <span class="s1">&#39;F1&#39;</span><span class="p">:</span> <span class="n">f1</span><span class="p">,</span>
+        <span class="s1">&#39;AUC&#39;</span><span class="p">:</span> <span class="n">auc</span><span class="p">,</span>
+        <span class="s1">&#39;CPU time&#39;</span><span class="p">:</span> <span class="n">time</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">plot_roc_curve</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">y_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Curva ROC(area = </span><span class="si">{</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_proba</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span> <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Porcentaje de Falsos Positivos&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Porcentaje de Verdaderos Positivos&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">plot_confusion_matrix</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    
+    <span class="n">cm_norm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">cm</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_norm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicho&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Verdadero&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s2">&quot;ClassFinal.pkl&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indexes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="random-forest">
+<h2>Random Forest<a class="headerlink" href="#random-forest" title="Link to this heading">#</a></h2>
+<p>Teniendo en cuenta que los modelos solo se entrenaron cun una base de datos balanceada, se compara con el mejor modelo pasado, que fue el modelo Random Forest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;RandomForestModel.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">RForest</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span> <span class="n">f</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">RForest</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">best_params_</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Random Forest&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>max_depth</th>
+      <th>n_estimators</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Random Forest</th>
+      <td>8</td>
+      <td>168</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span> <span class="n">RForest</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">RForest</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;Random Forest&#39;</span> <span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">result</span> <span class="p">)</span>
+<span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">result</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Random Forest&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+      <th>AUC</th>
+      <th>CPU time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Random Forest</th>
+      <td>0.081128</td>
+      <td>0.72371</td>
+      <td>0.1459</td>
+      <td>0.714166</td>
+      <td>35838.919434</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>En comparación al resultado anterior, el modelo obtuvo un desempeño menor, esto se puede deber al hecho que para esta entrega se usó un muestreo más pequeño del conjunto de datos, así como tambien cabe incluir la adición del PCA, lo que disminuye aún más la información disponible para el modelo. A continuación podemos ver qué componentes tuvieron mayor importancia sobre la decisión del modelo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_importances</span> <span class="o">=</span> <span class="n">RForest</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">sorted_indices</span> <span class="o">=</span> <span class="n">argsort</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">)</span>
+<span class="n">sorted_feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sorted_indices</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">)),</span> <span class="n">feature_importances</span><span class="p">[</span><span class="n">sorted_indices</span><span class="p">],</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">)),</span> <span class="n">sorted_feature_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature Importance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/815c1acfe4aa6ebd2a081bab73f471af904780e50d703b2d1a6979bacac11789.png" src="_images/815c1acfe4aa6ebd2a081bab73f471af904780e50d703b2d1a6979bacac11789.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span> <span class="n">RForest</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d195510a76689467e2adb617b2d345de3f9f51e6f7312f048208b178163a5b77.png" src="_images/d195510a76689467e2adb617b2d345de3f9f51e6f7312f048208b178163a5b77.png" />
+</div>
+</div>
+<p>Podemos ver que mantiene un resultado similar al anterior, manteniendo un balance entre los aciertos de ambas categorías.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_roc_curve</span><span class="p">(</span> <span class="n">RForest</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a7d564db2dd8f9f2a78461e5ebe41d694c2aec795f83442b910344c4cc7fe4e3.png" src="_images/a7d564db2dd8f9f2a78461e5ebe41d694c2aec795f83442b910344c4cc7fe4e3.png" />
+</div>
+</div>
+</section>
+<section id="svm-kernel-lineal">
+<h2>SVM: Kernel Lineal<a class="headerlink" href="#svm-kernel-lineal" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;linear.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">svm_lineal</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span> <span class="n">f</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">svm_lineal</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">best_params_</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SVR Lineal&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>classifier__C</th>
+      <th>classifier__gamma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>SVR Lineal</th>
+      <td>0.0001</td>
+      <td>489.974235</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span> <span class="n">svm_lineal</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">svm_lineal</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;Kernel Lineal&#39;</span> <span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">result</span> <span class="p">)</span>
+<span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">result</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kernel Lineal&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Podemos ver la matriz de confusión a continuación.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span> <span class="n">svm_lineal</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8e546fb2abee00e3ae69caa60b3ac6b3b139a0ffe4b5117e354a0b9c875ccecf.png" src="_images/8e546fb2abee00e3ae69caa60b3ac6b3b139a0ffe4b5117e354a0b9c875ccecf.png" />
+</div>
+</div>
+<p>Como se previó en la grafica de componentes principales, es evidente que al modelo le costó separar ambas clases entre sí, evidenciando el excesivo desbalance entre ambas clases. Aún así, teniendo en cuenta la naturaleza del problema, puede ser usado como un filtro inicial, para detectar fraudes, ya que ha sido el modelo con el mejor recall entre todos.</p>
+</section>
+<section id="kernel-sigmoide">
+<h2>Kernel Sigmoide<a class="headerlink" href="#kernel-sigmoide" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;sigmoid.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">svm_sigmoid</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span> <span class="n">f</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">svm_sigmoid</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">best_params_</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SVR Sigmoide&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>classifier__C</th>
+      <th>classifier__gamma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>SVR Sigmoide</th>
+      <td>10000.0</td>
+      <td>0.0001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span> <span class="n">svm_sigmoid</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">svm_sigmoid</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;Kernel Sigmoide&#39;</span> <span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">result</span> <span class="p">)</span>
+<span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">result</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kernel Sigmoide&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+      <th>AUC</th>
+      <th>CPU time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Kernel Sigmoide</th>
+      <td>0.043406</td>
+      <td>0.87926</td>
+      <td>0.082728</td>
+      <td>0.590498</td>
+      <td>187795.814687</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span> <span class="n">svm_sigmoid</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6f20b6a50e759794e9f211e740c16618d0d9c36b58ae432c7aca66c8ba4e9cc0.png" src="_images/6f20b6a50e759794e9f211e740c16618d0d9c36b58ae432c7aca66c8ba4e9cc0.png" />
+</div>
+</div>
+<p>Podemos ver en las dos gráficas que mantiene un balance ligeramente mayor que el modelo anterior, aún así, es claro que el modelo no es adecuado para clasificar certeramente ambas clases.</p>
+</section>
+<section id="kernel-rbf">
+<h2>Kernel RBF<a class="headerlink" href="#kernel-rbf" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;rbf.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span> <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">svm_rbf</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span> <span class="n">f</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">svm_rbf</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">best_params_</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SVR RBF&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>classifier__C</th>
+      <th>classifier__gamma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>SVR RBF</th>
+      <td>4567.621974</td>
+      <td>9.698384</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span> <span class="n">svm_rbf</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">svm_rbf</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;Kernel RBF&#39;</span> <span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">result</span> <span class="p">)</span>
+<span class="n">DataFrame</span><span class="p">(</span> <span class="p">[</span><span class="n">result</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kernel RBF&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+      <th>AUC</th>
+      <th>CPU time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Kernel RBF</th>
+      <td>0.089526</td>
+      <td>0.691821</td>
+      <td>0.158536</td>
+      <td>0.719143</td>
+      <td>187795.814687</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span> <span class="n">svm_rbf</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/714232db8475ccfa57e231a865818f22da3e8344164d38e13d43268af6e52a0a.png" src="_images/714232db8475ccfa57e231a865818f22da3e8344164d38e13d43268af6e52a0a.png" />
+</div>
+</div>
+<p>De forma similar al primer modelo, este kernel tiene un desempeño decente al momento de clasificar ambas categorías, por lo que es un modelo adecuado para el problema. Además, como se ve en el AUC,</p>
+</section>
+<section id="comparacion-de-modelos">
+<h2>Comparación de modelos<a class="headerlink" href="#comparacion-de-modelos" title="Link to this heading">#</a></h2>
+<p>Podemos ver los resultados de todos lo modelos mediante la siguiente tabla.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">results</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">indexes</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+      <th>AUC</th>
+      <th>CPU time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Random Forest</th>
+      <td>0.081128</td>
+      <td>0.723710</td>
+      <td>0.145900</td>
+      <td>0.714166</td>
+      <td>35838.919434</td>
+    </tr>
+    <tr>
+      <th>Kernel Lineal</th>
+      <td>0.041454</td>
+      <td>0.924781</td>
+      <td>0.079352</td>
+      <td>0.577110</td>
+      <td>60453.900503</td>
+    </tr>
+    <tr>
+      <th>Kernel Sigmoide</th>
+      <td>0.043406</td>
+      <td>0.879260</td>
+      <td>0.082728</td>
+      <td>0.590498</td>
+      <td>187795.814687</td>
+    </tr>
+    <tr>
+      <th>Kernel RBF</th>
+      <td>0.089526</td>
+      <td>0.691821</td>
+      <td>0.158536</td>
+      <td>0.719143</td>
+      <td>187795.814687</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Es clara la diferencia de tiempo entre los modelos, teniendo el Kernel Sigmoide y RBF exactamente el mismo tiempo de ejecución. Curiosamente, el kernel lineal tomó un tercio del tiempo, mientras que el Random Forest tomó poco más de un sexto del tiempo. Aún así, el kernel RBF supera al resto de modelos en todos los scores, aún considerando el muestreo y el PCA aplicado a los datos.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Punto1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Punto 1</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Punto3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Parte 1: Limpieza de los datos</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Parte 1: Limpieza de los datos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procentaje-de-datos-faltantes">Procentaje de datos faltantes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-2-analisis-exploratorio-de-los-datos">Parte 2: Análisis exploratorio de los datos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-dependiente">Variable dependiente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#productcd"><code class="docutils literal notranslate"><span class="pre">ProductCD</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-continuas">Variables contínuas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transactionamt"><code class="docutils literal notranslate"><span class="pre">TransactionAmt</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c1"><code class="docutils literal notranslate"><span class="pre">C1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c3"><code class="docutils literal notranslate"><span class="pre">C3</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c5"><code class="docutils literal notranslate"><span class="pre">C5</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d1"><code class="docutils literal notranslate"><span class="pre">D1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d10"><code class="docutils literal notranslate"><span class="pre">D10</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d15"><code class="docutils literal notranslate"><span class="pre">D15</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#v100"><code class="docutils literal notranslate"><span class="pre">V100</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#v131"><code class="docutils literal notranslate"><span class="pre">V131</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-grafico-con-componentes-principales">Análisis gráfico con componentes principales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-3-modelos-de-clasificacion">Parte 3: Modelos de clasificación</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-kernel-lineal">SVM: Kernel Lineal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-sigmoide">Kernel Sigmoide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-rbf">Kernel RBF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-modelos">Comparación de modelos</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ricardo Watts
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
